@@ -1,0 +1,76 @@
+Config { 
+    --Default values. Mainly here to get rid of warnings 
+    additionalFonts     = []
+    , textOffset        = -1
+    , iconOffset        = -1
+    , allDesktops       = True 
+    , overrideRedirect  = True
+    , pickBroadest      = False
+    , hideOnStart       = False
+    , lowerOnStart      = True
+    , persistent        = False
+    , iconRoot          = "."
+    , alpha             = 255
+    -- Values that I have changed 
+    , font            = "xft:Source Code Pro:size=8:antialias=true"
+    , borderColor   = "black"
+    , border        = TopB
+    , bgColor       = "black"
+    , fgColor       = "grey"
+    , position      = TopW L 100
+    , commands = [
+        --Finds the weather at UC Davis and displays temp
+        Run Weather "KEDU" [
+            "-t", "UC Davis: <tempF>F"
+            , "-L", "64"
+            , "-H", "77"
+            , "-n", "green"
+            , "-h", "red"
+            , "-l", "lightblue"
+            ] 36000
+        --Gives the current network up/down stream data rates
+          , Run DynNetwork[
+            "-L", "0"
+            , "-H", "32"
+            , "-n", "green"
+            , "-h", "red"
+            ] 10
+        --Gives the current CPU rate
+        , Run Cpu [
+            "-t", "Cpu: <total>%"
+            , "-L", "0"
+            , "-H", "50"
+            , "-h", "red"
+            , "-l", "green"
+            ] 10
+        --Gives the amount of RAM being used
+        , Run Memory [
+            "-t", "Mem: <usedratio>%"
+            ] 10
+        --Gives the current amount of swap memmory being used
+        , Run Swap [] 10
+        --Gives the version of the running kernel
+        , Run Com "uname" [
+            "-s", "-r"
+            ] "" 36000
+        --Gives the current date and time
+        , Run Date "%a %d %b %Y %H:%M:%S" "date" 10
+        --, Run Date "%a %_d %b %Y %H:%M:%S" "date" 10
+        --Gives the battery percent if not pluged in or AC if plugged in
+        , Run Battery [
+            "-t", "<acstatus>"
+            , "--"
+            , "-O", "AC"
+            , "-i", "AC"
+            , "-o", "Bat: <left>% / <timeleft>"
+            , "-h", "green"
+            , "-l", "red"
+            , "-p", "green"
+            ] 10 
+        --Gives a flag if the caps/num lock keys are pressed
+        , Run Locks
+    ]
+    , sepChar = "%"
+    , alignSep = "}{"
+    , template = "%cpu% | %memory% * %swap% | %dynnetwork% | %locks% }{<fc=#ee9a00>%date%</fc> | %uname% | %battery% | %KEDU% "
+}
