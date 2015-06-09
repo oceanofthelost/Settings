@@ -80,7 +80,8 @@ let g:cpp_experimental_template_highlight = 1
 " Plugin 'ervandew/supertab'
 " Use context aware tab completion 
 let g:SuperTabDefaultCompletionType = "context"
-
+" This gets rid of the scratchpad window.
+set completeopt=menu,menuone
 " Plugin 'luochen1990/rainbow'
 " None
 
@@ -89,14 +90,10 @@ let g:SuperTabDefaultCompletionType = "context"
 nmap <F8> :TagbarToggle<CR>
 
 " Plugin 'Rip-Rip/clang_complete'
-" " Set the path to the clang excecutable
-let g:clang_library_path='/usr/lib/llvm-3.2/lib'
 " Open quickfix window on error
 let g:clang_complete_copen                 = 1
 " Highlight errors like clang
 let g:clang_hl_errors                      = 1
-" Periodically update the quickfix windows
-let g:clang_periodic_quickfix              = 1
 " Close preview windows after a completion
 let g:clang_close_preview                  = 1
 " Additional clang compile flags
@@ -108,37 +105,32 @@ let g:clang_use_library = 1
 " None
 
 " Plugin 'w0ng/vim-hybrid'
+" None
+
 " Plugin 'michalbachowski/vim-wombat256mod' 
+" None
 set t_Co=256
 colorscheme wombat256mod
-
-
-"move this elsewhere 
-set laststatus=2 
-
 
 
 " Bundle 'scrooloose/syntastic'
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
-"let g:syntastic_cpp_compiler_options = '-std=c++11'
+let g:syntastic_cpp_compiler_options = '-std=c++11'
 
 " Bundle 'bitc/vim-hdevtools'
+" None 
 
 " Bundle 'bling/vim-airline'
-
-
-
-
-
-
+set laststatus=2 
 let g:airline#extensions#tabline#enabled = 1
-"let g:airline_theme='hybrid'
 let g:airline_powerline_fonts=1
 let g:airline_detect_modified=1
 let airline_mode_map = {
@@ -149,18 +141,28 @@ let airline_mode_map = {
       \ 'c'  : 'C',
       \ 'v'  : 'V',
       \ 'V'  : 'V',
+      \ ' '  : 'V',
       \ 's'  : 'S',
       \ 'S'  : 'S',
- 
+      \ ' '  : 'S',
       \ } 
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '◀'
+
+
+
+let airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
 let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.linenr = ''
+
+
+
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#tagbar#enabled=1
 let g:airline_section_b = '%{getcwd()}'
